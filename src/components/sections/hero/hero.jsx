@@ -7,6 +7,7 @@ const DEFAULT_ICONS = [
   { id: 'skills', label: 'Skills', href: '#skills', icon: '/public/logos/skills.png', defaultXRatio: 0.79, defaultYRatio: 0.08 },
   { id: 'projects', label: 'Projects', href: '#projects', icon: '/public/logos/project.png', defaultXRatio: 0.08, defaultYRatio: 0.81 },
   { id: 'contact', label: 'Contact', href: '#contact', icon: '/public/logos/contact.png', defaultXRatio: 0.90, defaultYRatio: 0.71 },
+  { id: 'certificates', label: 'Certificates', href: '#certificates', icon: '/public/logos/award.png', defaultXRatio: 0.01, defaultYRatio: 0.50 },
 ];
 
 const GRID_SIZE = 20; // Grid snap interval in pixels
@@ -338,8 +339,8 @@ const Home = () => {
           right: 'calc(2vw - 35px)',
           bottom: 0,
           zIndex: 10,
-          width: '63vw',
-          height: '95vh',
+          width: '65vw',
+          height: '100vh',
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'center',
@@ -426,6 +427,16 @@ const Home = () => {
           title="GitHub"
         >
           <img src="/public/logos/github.png" alt="" className="hero-dock__icon" />
+        </a>
+        <a
+          className="hero-dock__item"
+          href="https://www.linkedin.com/in/devaki-joshi-033b6a307/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          title="LinkedIn"
+        >
+          <img src="/public/logos/linkedin.png" alt="" className="hero-dock__icon" />
         </a>
         <a
           className="hero-dock__item"

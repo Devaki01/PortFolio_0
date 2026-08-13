@@ -561,6 +561,7 @@
   width: 30px;
   height: 30px;
   border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 8px;
   border-radius: 8px;
   filter: none;
   opacity: 1;
@@ -571,6 +572,13 @@
 .hero-dock__item:focus-visible .hero-dock__icon{
   opacity: 1;
 }
+
+.hero-dock__item:nth-child(1) .hero-dock__icon {
+  filter: brightness(0) saturate(100%) invert(92%) sepia(33%)
+          saturate(1437%) hue-rotate(23deg)
+          brightness(104%) contrast(101%);
+}
+
 
 @media (max-width: 640px){
   .hero-dock{
