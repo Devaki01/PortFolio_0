@@ -1,10 +1,53 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './hero.css';
 
+// Default target positions matching the marked boxes (x, y percentages)
+const DEFAULT_ICONS = [
+  { id: 'about', label: 'About', href: '#about', icon: '/public/logos/about.png', defaultXRatio: 0.21, defaultYRatio: 0.08 },
+  { id: 'skills', label: 'Skills', href: '#skills', icon: '/public/logos/skills.png', defaultXRatio: 0.79, defaultYRatio: 0.08 },
+  { id: 'projects', label: 'Projects', href: '#projects', icon: '/public/logos/project.png', defaultXRatio: 0.08, defaultYRatio: 0.81 },
+  { id: 'contact', label: 'Contact', href: '#contact', icon: '/public/logos/contact.png', defaultXRatio: 0.90, defaultYRatio: 0.71 },
+];
+
+const GRID_SIZE = 20; // Grid snap interval in pixels
+const LOCAL_STORAGE_KEY = 'portfolio_desktop_icon_positions_v1';
+
 const Home = () => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  // State to track desktop icon coordinates
+  const [iconPositions, setIconPositions] = useState(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved icon positions', e);
+      }
+    }
+    // Calculate initial positions based on screen dimensions matching marked positions
+    const initialPos = {};
+    const width = typeof window !== 'undefined' ? window.innerWidth : 1200;
+    const height = typeof window !== 'undefined' ? window.innerHeight : 800;
+
+    DEFAULT_ICONS.forEach((item) => {
+      initialPos[item.id] = {
+        x: Math.round((width * item.defaultXRatio) / GRID_SIZE) * GRID_SIZE,
+        y: Math.round((height * item.defaultYRatio) / GRID_SIZE) * GRID_SIZE,
+      };
+    });
+    return initialPos;
+  });
+
+  const [activeDragId, setActiveDragId] = useState(null);
+  const dragOffset = useRef({ x: 0, y: 0 });
+
+  // Save positions to localStorage
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(iconPositions));
+  }, [iconPositions]);
 
   // Live Date and Time Tracker
   useEffect(() => {
@@ -50,7 +93,6 @@ const Home = () => {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Background set to Jet Black (#252525)
       ctx.fillStyle = '#151515';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -116,7 +158,48 @@ const Home = () => {
     };
   }, []);
 
-  // Time Formatter
+  // --- Pointer Event Drag & Drop Handlers with Grid Snap ---
+  const handlePointerDown = (id, e) => {
+    e.preventDefault();
+    setActiveDragId(id);
+    const current = iconPositions[id] || { x: 0, y: 0 };
+    dragOffset.current = {
+      x: e.clientX - current.x,
+      y: e.clientY - current.y,
+    };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (id, e) => {
+    if (activeDragId !== id) return;
+    const rawX = e.clientX - dragOffset.current.x;
+    const rawY = e.clientY - dragOffset.current.y;
+
+    setIconPositions((prev) => ({
+      ...prev,
+      [id]: { x: rawX, y: rawY },
+    }));
+  };
+
+  const handlePointerUp = (id, e) => {
+    if (activeDragId !== id) return;
+    setActiveDragId(null);
+
+    // Snap on drop to grid
+    const current = iconPositions[id];
+    if (current) {
+      const snappedX = Math.round(current.x / GRID_SIZE) * GRID_SIZE;
+      const snappedY = Math.round(current.y / GRID_SIZE) * GRID_SIZE;
+
+      setIconPositions((prev) => ({
+        ...prev,
+        [id]: { x: snappedX, y: snappedY },
+      }));
+    }
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
+  // Time & Date Formatters
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
@@ -124,7 +207,6 @@ const Home = () => {
     hour12: true,
   });
 
-  // Date Formatter: DD-MM-YYYY
   const day = String(currentTime.getDate()).padStart(2, '0');
   const month = String(currentTime.getMonth() + 1).padStart(2, '0');
   const year = currentTime.getFullYear();
@@ -172,7 +254,7 @@ const Home = () => {
           letterSpacing: '-0.02em',
           lineHeight: '0.95',
           maxWidth: '50vw',
-          transform: 'translate(35px, -50px)', // Shifted +35px right and +50px higher
+          transform: 'translate(35px, -50px)',
         }}
       >
         <span
@@ -216,31 +298,44 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Section Navigation */}
-      <nav className="hero-section-nav" aria-label="Portfolio sections">
-        <a href="#about" className="hero-section-nav__item">
-          <img src="/public/logos/about.png" alt="" />
-          <span>About</span>
-        </a>
-        <a href="#skills" className="hero-section-nav__item">
-          <img src="/public/logos/skills.png" alt="" />
-          <span>Skills</span>
-        </a>
-        <a href="#projects" className="hero-section-nav__item">
-          <img src="/public/logos/project.png" alt="" />
-          <span>Projects</span>
-        </a>
-        <a href="#contact" className="hero-section-nav__item">
-          <img src="/public/logos/contact.png" alt="" />
-          <span>Contact</span>
-        </a>
-      </nav>
+      {/* Draggable Desktop Icons Layer at Marked Positions */}
+      {DEFAULT_ICONS.map((item) => {
+        const pos = iconPositions[item.id] || { x: 0, y: 0 };
+        const isDragging = activeDragId === item.id;
+
+        return (
+          <div
+            key={item.id}
+            className={`desktop-icon ${isDragging ? 'desktop-icon--dragging' : ''}`}
+            style={{
+              transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
+            }}
+            onPointerDown={(e) => handlePointerDown(item.id, e)}
+            onPointerMove={(e) => handlePointerMove(item.id, e)}
+            onPointerUp={(e) => handlePointerUp(item.id, e)}
+          >
+            <a
+              href={item.href}
+              className="desktop-icon__link"
+              onClick={(e) => {
+                // Prevent navigation click if dragging
+                if (isDragging) e.preventDefault();
+              }}
+            >
+              <div className="desktop-icon__box">
+                <img src={item.icon} alt={item.label} className="desktop-icon__img" />
+              </div>
+              <span className="desktop-icon__caption">{item.label}</span>
+            </a>
+          </div>
+        );
+      })}
 
       {/* Right Column (Expanded Image Anchored to Bottom) */}
       <div
         style={{
           position: 'absolute',
-          right: 'calc(2vw - 35px)', // Shifted 35px to the right
+          right: 'calc(2vw - 35px)',
           bottom: 0,
           zIndex: 10,
           width: '63vw',

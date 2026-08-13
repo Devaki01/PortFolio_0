@@ -637,3 +637,92 @@
     font-size: 12px;
   }
 }
+
+/* ================================================================
+   DRAGGABLE DESKTOP ICONS WITH CAPTIONS
+   ================================================================ */
+.desktop-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.desktop-icon--dragging {
+  cursor: grabbing;
+  z-index: 100;
+  transition: none !important;
+}
+
+.desktop-icon__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.desktop-icon__box {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+
+.desktop-icon:hover .desktop-icon__box {
+  border-color: #ccff00;
+  background: rgba(204, 255, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.desktop-icon__img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.desktop-icon__caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .desktop-icon__box {
+    width: 42px;
+    height: 42px;
+  }
+  .desktop-icon__img {
+    width: 24px;
+    height: 24px;
+  }
+  .desktop-icon__caption {
+    font-size: 10px;
+  }
+}
