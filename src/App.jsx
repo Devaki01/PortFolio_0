@@ -5,7 +5,8 @@ import Home from './components/sections/hero/hero';
 function App() {
   return (
     <div className="App">
-      <Home />
+      
+      <Home /> 
     </div>
   );
 }

@@ -1,0 +1,39 @@
+{
+  "user": {
+    "name": "Devaki",
+    "role": "Software Developer & Designer",
+    "location": "India"
+  },
+
+  "about": {
+    "description": "Building thoughtful interfaces and resilient systems."
+  },
+
+  "skills": {
+    "languages": ["Java", "JavaScript", "Python"],
+    "frontend": ["React", "Next.js", "Tailwind CSS"],
+    "backend": ["Node.js", "Express.js"],
+    "tools": ["Git", "GitHub", "Docker", "Postman"]
+  },
+
+  "projects": [
+    {
+      "name": "Project One",
+      "description": "A full-stack web application.",
+      "tech": ["React", "Node.js", "MongoDB"],
+      "github": "#"
+    },
+    {
+      "name": "Project Two",
+      "description": "An interactive UI project.",
+      "tech": ["React", "Tailwind"],
+      "github": "#"
+    }
+  ],
+
+  "contact": {
+    "email": "your@email.com",
+    "github": "#",
+    "linkedin": "#"
+  }
+}

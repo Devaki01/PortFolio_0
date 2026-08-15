@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './hero.css';
+import Terminal from '../terminal/terminal.jsx';
 
 // Default target positions matching the marked boxes (x, y percentages)
 const DEFAULT_ICONS = [
@@ -44,6 +45,9 @@ const Home = () => {
 
   const [activeDragId, setActiveDragId] = useState(null);
   const dragOffset = useRef({ x: 0, y: 0 });
+
+  // Whether the Terminal window is open, like an app on a real desktop
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
   // Save positions to localStorage
   useEffect(() => {
@@ -230,6 +234,21 @@ const Home = () => {
         boxSizing: 'border-box',
       }}
     >
+      {/* Top-left Portfolio Logo */}
+      <img
+        src="/public/logos/logo.png"
+        alt="Logo"
+        style={{
+          position: 'absolute',
+          top: '-16px',
+          left: '24px',
+          width: '150px',
+          height: 'auto',
+          objectFit: 'contain',
+          zIndex: 30,
+        }}
+      />
+
       {/* Background Vector Field Canvas */}
       <canvas
         ref={canvasRef}
@@ -405,6 +424,10 @@ const Home = () => {
           href="#terminal"
           aria-label="Terminal"
           title="Terminal"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsTerminalOpen(true);
+          }}
         >
           <img src="/public/logos/terminal.png" alt="" className="hero-dock__icon" />
         </a>
@@ -449,6 +472,9 @@ const Home = () => {
           <img src="/public/logos/figma.png" alt="" className="hero-dock__icon" />
         </a>
       </nav>
+
+      {/* Terminal opens as a floating window, like a real desktop app */}
+      {isTerminalOpen && <Terminal onClose={() => setIsTerminalOpen(false)} />}
     </div>
   );
 };
