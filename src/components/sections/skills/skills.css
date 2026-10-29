@@ -3,14 +3,14 @@
 /* =========================================================
    SKILLS PAGE
    ========================================================= */
-
+/* 
 html,
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background: #161618;
-}
+} */
 
 .skills-page {
   --lime: #c8ff3d;
@@ -249,15 +249,10 @@ body {
 
 .skills-stack__subtitle {
   margin: 0 0 8px;
-
   color: var(--lime);
-
   font-family: 'Fira Code', monospace;
-
-  font-size: 18px;
-
+  font-size: 16px;
   letter-spacing: 0.14em;
-
   text-transform: uppercase;
 }
 
@@ -268,7 +263,7 @@ body {
   font-size: clamp(24px, 3.6vw, 58px);
   font-weight: 800;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.0em;
   color: #f4f4f0;
 }
 
@@ -278,14 +273,10 @@ body {
 
 .skills-stack__content {
   display: grid;
-
   grid-template-columns: 160px 1fr;
-
   gap: 40px;
-
   align-items: start;
 }
-
 
 /* Description */
 
@@ -317,10 +308,8 @@ body {
 
 .skills-grid {
   display: grid;
-
   grid-template-columns:
     repeat(4, minmax(130px, 1fr));
-
   gap: 14px;
 }
 
@@ -331,13 +320,9 @@ body {
 
 .skill-card {
   position: relative;
-
-  min-height: 145px;
-
-  padding: 22px;
-
+  min-height: 120px;
+  padding: 20px;
   background: var(--card);
-
   border: 1px solid rgba(255, 255, 255, 0.025);
 
   box-shadow:
@@ -357,9 +342,7 @@ body {
 
 .skill-card:hover {
   transform: translateY(-6px);
-
   background: var(--card-hover);
-
   border-color: rgba(200, 255, 61, 0.35);
 }
 
@@ -378,7 +361,6 @@ body {
 .skill-card__icon img {
   width: 48px;
   height: 48px;
-
   object-fit: contain;
 }
 
@@ -387,34 +369,10 @@ body {
 
 .skill-card__name {
   margin-top: 22px;
-
   font-family: 'Fira Code', monospace;
-
-  font-size: 16px;
-
+  font-size: 18px;
   font-weight: 500;
-
   color: #e8e8e4;
-}
-
-
-/* Arrow */
-
-.skill-card__arrow {
-  position: absolute;
-
-  right: 16px;
-  top: 14px;
-
-  color: #55555b;
-
-  font-size: 15px;
-
-  transition: color 200ms ease;
-}
-
-.skill-card:hover .skill-card__arrow {
-  color: var(--lime);
 }
 
 
@@ -425,43 +383,30 @@ body {
 .skills-stack__footer {
   display: flex;
   align-items: center;
-
   gap: 14px;
-
   margin-top: 34px;
-
-  color: #626269;
-
+  color: #989898;
   font-family: 'Fira Code', monospace;
-
-  font-size: 9px;
-
+  font-size: 12px;
   letter-spacing: 0.12em;
 }
 
 
 .skills-stack__scroll-line {
-  width: 80px;
+  width: 100px;
   height: 1px;
-
   background: #333338;
-
   position: relative;
 }
 
 
 .skills-stack__scroll-line span {
   position: absolute;
-
   left: 0;
   top: 0;
-
   width: 30%;
-
-  height: 100%;
-
+  height: 10%;
   background: var(--lime);
-
   animation: scrollProgress 2s ease-in-out infinite;
 }
 

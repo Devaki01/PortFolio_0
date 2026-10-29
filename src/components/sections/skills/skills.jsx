@@ -235,9 +235,9 @@ const Skills = () => {
                       {skill.name}
                     </span>
 
-                    <span className="skill-card__arrow">
+                    {/* <span className="skill-card__arrow">
                       ↗
-                    </span>
+                    </span> */}
 
                   </div>
                 ))}

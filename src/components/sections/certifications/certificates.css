@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --bg-color: #161618;
+  --lime-green: #c8ff3d;
+  --lime-glow: rgba(200, 255, 61, 0.4);
+  --text-primary: #f4f4f0;
+}
+
+.certificates-header {
+  margin-bottom: 8vh;
+  padding: 1vw;
+}
+
+.certificates-tag {
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 0.5vw;
+  margin-left: 8vw;
+  color: var(--text-primary);
+  font-family: 'Fira Code', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+}
+
+.certificates-headline {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 5.2vw, 67px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.cert-character-img {
+  position: absolute;
+  top: -85px;
+  left: -25px;
+  width: 175px;
+  height: 175px;
+  object-fit: contain;
+  z-index: 2;
+  transform: rotate(-1.5deg);
+}
+
+.highlight-box {
+  position: relative;
+  display: inline-block;
+  margin-right: 16px;
+  margin-top: 3vw;
+  padding: 2px 20px;
+  padding-left: 7vw;
+  border-radius: 4px;
+  background-color: var(--lime-green);
+  color: var(--bg-color);
+  transform: rotate(-1.5deg);
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s ease;
+}
+
+.highlight-box:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 0 0 25px var(--lime-glow);
+}
+
+.asterisk {
+  position: absolute;
+  top: -12px;
+  right: -14px;
+  color: var(--text-primary);
+  font-size: 0.7em;
+  text-shadow: 0 0 24px var(--bg-color);
+}
